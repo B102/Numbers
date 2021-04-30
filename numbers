@@ -1,0 +1,7 @@
+package numbers;
+public class numbers {
+    public static void main(String[] args) {
+        System.out.print(args);
+        // TODO code application logic here
+    }  
+}
