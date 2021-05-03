@@ -5,15 +5,20 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class numbers {
-    private JMapCell[][] Cells;
+    JMapCell[][] Cells;
     private int width;
     private int height;
     public static void main(String[] args) {
-        numbers NumberRecognition = new numbers(64, 64);
+        numbers NumberRecognition = new numbers(32, 32);
         NumberRecognition.initWorkPlace();
     }
     numbers(int w, int h) {
@@ -31,11 +36,11 @@ public class numbers {
         JFrame frame = new JFrame("Drawing Board");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        Container contentPane = frame.getContentPane();                         
-        contentPane.setLayout(new BorderLayout());                              
+        Container contentPane = frame.getContentPane();                         //spits out the ContentPane for "frame"
+        contentPane.setLayout(new BorderLayout());                              //ContentPane updates b/c cP=frame.cP
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints(); 
-                                                                                
+                                                                                //setup the constraints for components in this class
         constraints.insets.set(0, 0, 1, 1);
         
         JPanel mapPanel = new JPanel(layout);
@@ -55,11 +60,90 @@ public class numbers {
                 
                 mapPanel.add(Cells[x][y]);
                 Cells[x][y].addMouseListener(pen);
+                Cells[x][y].xCoord = x;
+                Cells[x][y].yCoord = y;
             }
         }
         contentPane.add(mapPanel, BorderLayout.CENTER);
+        
+        JButton findPathButton = new JButton("Compile Map");
+        findPathButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { compileMap(); }
+
+            private void compileMap() {
+                System.out.println("cm");
+            }
+        });
+        
+        contentPane.add(findPathButton, BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
     }
-}
+    class Pen implements MouseListener{
+        private int drawn;
+        private int colored = 0;
+        private double timeStart;
+        private double timeExit;
+        private boolean drawing;
+        @Override
+        public void mousePressed(MouseEvent e){
+            drawing = true;
+        }
 
+        @Override
+        public void mouseReleased(MouseEvent e){
+            drawing = false;
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e){
+            if (drawing){
+                timeStart = System.currentTimeMillis();
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e){
+            if (drawing){
+                timeExit = System.currentTimeMillis();
+                JMapCell cell = (JMapCell) e.getSource();
+                colored = cell.colorVal();
+                double center = timeExit - timeStart;
+                //double ambient = center * 0.1;
+                if(cell.xCoord != 0 && cell.xCoord != 63 && cell.yCoord != 0 && cell.yCoord != 63){
+                    /*
+                    Cells[cell.xCoord + 1][cell.yCoord].setColor(compileColor(ambient));
+                    Cells[cell.xCoord][cell.yCoord - 1].setColor(compileColor(ambient));
+                    Cells[cell.xCoord][cell.yCoord + 1].setColor(compileColor(ambient));
+                    Cells[cell.xCoord - 1][cell.yCoord].setColor(compileColor(ambient));
+                    */
+                    cell.setColor(compileColor(center));
+                }else{
+                    cell.setColor(compileColor(center));
+                }
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            JMapCell cell = (JMapCell) e.getSource();
+            cell.setColor(0);
+        }
+
+        int compileColor(double time){
+            double grayScale = 165 - time;
+            if(colored != 0) {
+                grayScale -= (255 - colored);
+            }
+            if(grayScale < -100){
+                grayScale = 0;
+            }
+            if(grayScale < 0){
+                grayScale = 1;
+            }
+            drawn = (int)grayScale;
+            return drawn;
+        }
+    }
+}
