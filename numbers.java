@@ -35,7 +35,6 @@ public class numbers {
         height = h;
         
     }
-    
     private void initWorkPlace(){
         JFrame frame = new JFrame("Drawing Board");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +76,8 @@ public class numbers {
 
             private void compileMap() {
                 JMap Map = new JMap();
-                Map.load(Cells);
+                Map.translate(Cells, height, width);
+                Map.WhatIsThis();
             }
         });
         
