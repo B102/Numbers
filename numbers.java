@@ -69,19 +69,33 @@ public class numbers {
         }
         contentPane.add(mapPanel, BorderLayout.CENTER);
         
-        JButton findPathButton = new JButton("Compile Map");
-        findPathButton.addActionListener(new ActionListener() {
+        JMap Map = new JMap();
+        Map.update(Cells, height, width);
+                
+        JButton compile = new JButton("Compile Map");
+        compile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { compileMap(); }
 
             private void compileMap() {
-                JMap Map = new JMap();
-                Map.translate(Cells, height, width);
-                Map.WhatIsThis();
+                Map.update(Cells, height, width);
+                Map.print2D();
+                Map.predict();
             }
         });
         
-        contentPane.add(findPathButton, BorderLayout.SOUTH);
+        JButton active = new JButton("Iterate");
+        active.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { active(); }
+
+            private void active() {
+                Map.iterate();
+            }
+        });
+        
+        contentPane.add(active, BorderLayout.SOUTH);
+        contentPane.add(compile, BorderLayout.WEST);
         
         frame.pack();
         frame.setVisible(true);
