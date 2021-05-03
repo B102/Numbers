@@ -79,7 +79,8 @@ public class numbers {
 
             private void compileMap() {
                 Map.update(Cells, height, width);
-                Map.print2D();
+                double[][] testrun = {{}, {}, {}};
+                //Map.print2D();
                 Map.predict();
             }
         });
@@ -95,7 +96,7 @@ public class numbers {
         });
         
         contentPane.add(active, BorderLayout.SOUTH);
-        contentPane.add(compile, BorderLayout.WEST);
+        contentPane.add(compile, BorderLayout.NORTH);
         
         frame.pack();
         frame.setVisible(true);
