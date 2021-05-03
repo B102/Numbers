@@ -8,8 +8,6 @@ class JMapCell extends JComponent{
     private int Drawn = 0;
     int xCoord;
     int yCoord;
-    
-    boolean path = false;
     JMapCell(int color){
         setPreferredSize(CELL_SIZE);
         setColor(color);
