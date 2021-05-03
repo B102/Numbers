@@ -14,13 +14,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class numbers {
+    
     JMapCell[][] Cells;
     private int width;
     private int height;
+    
     public static void main(String[] args) {
         numbers NumberRecognition = new numbers(32, 32);
         NumberRecognition.initWorkPlace();
     }
+    
     numbers(int w, int h) {
         if (w <= 0)
             throw new IllegalArgumentException("width must be > 0; got " + w);
@@ -32,6 +35,7 @@ public class numbers {
         height = h;
         
     }
+    
     private void initWorkPlace(){
         JFrame frame = new JFrame("Drawing Board");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,14 +76,17 @@ public class numbers {
             public void actionPerformed(ActionEvent e) { compileMap(); }
 
             private void compileMap() {
-                System.out.println("cm");
+                JMap Map = new JMap();
+                Map.load(Cells);
             }
         });
         
         contentPane.add(findPathButton, BorderLayout.SOUTH);
+        
         frame.pack();
         frame.setVisible(true);
     }
+    
     class Pen implements MouseListener{
         private int drawn;
         private int colored = 0;
@@ -132,7 +139,7 @@ public class numbers {
         }
 
         int compileColor(double time){
-            double grayScale = 165 - time;
+            double grayScale = 185 - time;
             if(colored != 0) {
                 grayScale -= (255 - colored);
             }
@@ -140,7 +147,7 @@ public class numbers {
                 grayScale = 0;
             }
             if(grayScale < 0){
-                grayScale = 1;
+                grayScale = 30;
             }
             drawn = (int)grayScale;
             return drawn;
