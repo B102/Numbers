@@ -14,7 +14,7 @@ public class sample {
     int width;
     String name;
     final int OFFSET = 2;
-    //IMPORTANT: all samples should be in same size
+    //IMPORTANT: all samples should be the same size
     public sample(int w, int h, String n) throws IOException {
         data = new double[h * w][1];
         height = h;
