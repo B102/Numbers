@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,7 +26,6 @@ public class numbers {
         numbers NumberRecognition = new numbers(32, 32);
         NumberRecognition.initWorkPlace();
     }
-    
     numbers(int w, int h) {
         if (w <= 0)
             throw new IllegalArgumentException("width must be > 0; got " + w);
@@ -67,6 +69,7 @@ public class numbers {
                 Cells[x][y].yCoord = y;
             }
         }
+        
         contentPane.add(mapPanel, BorderLayout.CENTER);
         
         JMap Map = new JMap();
@@ -75,12 +78,24 @@ public class numbers {
         JButton compile = new JButton("Compile Map");
         compile.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { compileMap(); }
+            public void actionPerformed(ActionEvent e) { try {
+                compileMap();
+                } catch (IOException ex) {
+                    Logger.getLogger(numbers.class.getName()).log(Level.SEVERE, null, ex);
+                }
+}
 
-            private void compileMap() {
+            private void compileMap() throws IOException {
                 Map.update(Cells, height, width);
-                double[][] testrun = {{}, {}, {}};
-                //Map.print2D();
+                /*
+                double[][] testrun = {{2,3}, {4,5}, {6,7}};
+                lib test = new lib();
+                test.print2D(test.T(testrun));
+                Map.print2D();
+                */
+                sample s = new sample(width, height);
+                s.read();
+                s.print2D();
                 Map.predict();
             }
         });
@@ -101,7 +116,6 @@ public class numbers {
         frame.pack();
         frame.setVisible(true);
     }
-    
     class Pen implements MouseListener{
         private int drawn;
         private int colored = 0;
