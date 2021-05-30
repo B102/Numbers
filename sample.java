@@ -10,9 +10,17 @@ public class sample {
     
     double[][] data;
     int expectedOutput;
+    int height;
+    int width;
+    String name;
     final int OFFSET = 2;
-    public sample(int w, int h) {
-        data = new double[w][h];
+    //IMPORTANT: all samples should be in same size
+    public sample(int w, int h, String n) throws IOException {
+        data = new double[h * w][1];
+        height = h;
+        width = w;
+        name = n;
+        read();
     } 
     void read() throws IOException {
         int w = 32;
@@ -21,12 +29,14 @@ public class sample {
         BufferedImage image = null;//image store../Users/shuuihisashi/Desktop
         //read
         try{
-            File input = new File("/Users/shuuihisashi/Desktop/JavaImage/4.png");
+            File input = new File(name);
             image = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_GRAY);
             image = ImageIO.read(input);
-            for(int y = 0; y < data.length - OFFSET; y++){
-                for(int x = 0; x < data[0].length; x++){
-                    data[x][y] = image.getRGB(x, y)/100000;
+            int vectorDim = 0;
+            for(int y = 0; y < height - OFFSET && vectorDim < (h * w); y++){
+                for(int x = 0; x < width && vectorDim < (h * w); x++){
+                    data[vectorDim][0] = (image.getRGB(x, y)/100000) * (-1);
+                    vectorDim++;
                 }
             }
             System.out.println("Read");
