@@ -21,6 +21,7 @@ public class numbers {
     JMapCell[][] Cells;
     private int width;
     private int height;
+    final int LAYERS = 2;
     
     public static void main(String[] args) {
         numbers NumberRecognition = new numbers(32, 32);
@@ -73,29 +74,22 @@ public class numbers {
         contentPane.add(mapPanel, BorderLayout.CENTER);
         
         JMap Map = new JMap();
-        Map.update(Cells, height, width);
+        Map.updateInput(Cells, height, width);
                 
         JButton compile = new JButton("Compile Map");
         compile.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { try {
-                compileMap();
-                } catch (IOException ex) {
-                    Logger.getLogger(numbers.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
-
-            private void compileMap() throws IOException {
-                Map.update(Cells, height, width);
+            public void actionPerformed(ActionEvent e) {
+                compileMap(); }
+            //Matrix testrun...
+            private void compileMap() {
+                Map.updateInput(Cells, height, width);
                 /*
                 double[][] testrun = {{2,3}, {4,5}, {6,7}};
                 lib test = new lib();
                 test.print2D(test.T(testrun));
                 Map.print2D();
                 */
-                sample s = new sample(width, height);
-                s.read();
-                s.print2D();
                 Map.predict();
             }
         });
@@ -103,10 +97,14 @@ public class numbers {
         JButton active = new JButton("Iterate");
         active.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { active(); }
-
-            private void active() {
-                Map.iterate();
+            public void actionPerformed(ActionEvent e) { try {
+                active();
+                } catch (IOException ex) {
+                    Logger.getLogger(numbers.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            private void active() throws IOException {
+                Map.iterate(width, height, LAYERS);
             }
         });
         
