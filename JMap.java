@@ -1,22 +1,12 @@
-package numbers;
-
 import java.io.IOException;
 import java.util.Arrays;
 
 class JMap {
-    
-    layer[] layers;
     sample[] sampleSet = new sample[16];
+    layer[] layers;
     double[][] target;
-    double[][] bias1stand2nd;
-    double[][] bias2ndand3rd;
-    double[][] bias3rdand4th;
-    double[][] weight1stand2nd;
-    double[][] weight2ndand3rd;
-    double[][] weight3rdand4th;
     private int width;
     private int height;
-    //final int INPUT_DATA_SIZE = 1024;
     final int OUTPUT_DATA_SIZE = 10;
     final int LAYER_SIZE = 16;
     void updateInput(JMapCell[][] image, int h, int w){
@@ -56,48 +46,17 @@ class JMap {
     void iterate(int w, int h, int numbersOfLayers) throws IOException {
         height = h;
         width = w;
-        //create layers
         layers = new layer[numbersOfLayers];
+        //create layers, assign 0 bias, create random weights
         layer inputL = new layer(h * w);
-        layer outputL = new layer(OUTPUT_DATA_SIZE);
-        layer hiddenL1st = new layer(LAYER_SIZE);
-        layer hiddenL2nd = new layer(LAYER_SIZE);
+        layer outputL = new layer(OUTPUT_DATA_SIZE, 1, LAYER_SIZE);
+        layer hiddenL1st = new layer(LAYER_SIZE, h, w);
+        layer hiddenL2nd = new layer(LAYER_SIZE, 1, LAYER_SIZE);
+        //System.out.println();
         layers[0] = inputL;layers[1] = hiddenL1st;layers[2] = hiddenL2nd;layers[3] = outputL;
-        //create rand() weights
-        weight1stand2nd = new double[LAYER_SIZE][h * w];
-        for(int i = 0; i < (h * w); i++) {
-            for(int j = 0; j < LAYER_SIZE; j++) {
-                weight1stand2nd[j][i] = rand();
-            }
-    	}
-        weight2ndand3rd = new double[LAYER_SIZE][LAYER_SIZE];
-        for(int i = 0; i < (LAYER_SIZE); i++) {
-            for(int j = 0; j < LAYER_SIZE; j++) {
-                weight2ndand3rd[j][i] = rand();
-            }
-    	}
-        weight3rdand4th = new double[OUTPUT_DATA_SIZE][LAYER_SIZE];
-        for(int i = 0; i < (LAYER_SIZE); i++) {
-            for(int j = 0; j < OUTPUT_DATA_SIZE; j++) {
-                weight3rdand4th[j][i] = rand();
-            }
-    	}
-        //assign 0 bias
-        bias1stand2nd = new double[h * w][1];
-        for(int i = 0; i < (h * w); i++){
-            bias1stand2nd[i][0] = 0;
-        }
-        bias2ndand3rd = new double[LAYER_SIZE][1];
-        for(int i = 0; i < (LAYER_SIZE); i++){
-            bias2ndand3rd[i][0] = 0;
-        }
-        bias3rdand4th = new double[LAYER_SIZE][1];
-        for(int i = 0; i < (LAYER_SIZE); i++){
-            bias3rdand4th[i][0] = 0;
-        }
         //import training data
         imp();
-        //train
+        train(1, 0.2f);
         
     }
     
@@ -119,10 +78,15 @@ class JMap {
         sample s415 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/415.png"); sampleSet[14] = s415;s415.expectedOutput = 4;
         sample s416 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/416.png"); sampleSet[15] = s416;s416.expectedOutput = 4;
     }
-    void forward(double[][] inputs){
+    void forward(sample input){
         //bring the inputs into the input layer layers[0]
-        
-        //add in the bias 
+    	lib cal = new lib();
+    	layers[0].components = input.data;
+    	for(int i = 0; i < layers.length - 1; i++) {
+    		layers[i + 1].components = cal.matAdd(cal.dotMul(layers[i + 1].weight, layers[i].getData()), layers[i + 1].bias);
+    	}
+    	layers[3].print2D();
+    	System.out.println(" ");
     }
     
     void backward(double r, sample s) {
@@ -133,15 +97,9 @@ class JMap {
     void train(int iterations,float rate) {
     	for(int i = 0; i < iterations; i++) {
             for(int j = 0; j < sampleSet.length; j++) {
-                forward(sampleSet[j].data);
+                forward(sampleSet[j]);
                 backward(rate,sampleSet[j]);
             }
     	}
-    }
-    double rand() {
-        double min = -100;
-        double max = 100;
-        double rand = (double)Math.floor(Math.random()*(max-min+1)+min);
-        return rand / 100;
     }
 }
