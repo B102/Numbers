@@ -61,22 +61,22 @@ class JMap {
     }
     
     void imp() throws IOException{
-        sample s41 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/41.png"); sampleSet[0] = s41;s41.expectedOutput = 4;
-        sample s42 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/42.png"); sampleSet[1] = s42;s42.expectedOutput = 4;
-        sample s43 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/43.png"); sampleSet[2] = s43;s43.expectedOutput = 4;
-        sample s44 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/44.png"); sampleSet[3] = s44;s44.expectedOutput = 4;
-        sample s45 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/45.png"); sampleSet[4] = s45;s45.expectedOutput = 4;
-        sample s46 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/46.png"); sampleSet[5] = s46;s46.expectedOutput = 4;
-        sample s47 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/47.png"); sampleSet[6] = s47;s47.expectedOutput = 4;
-        sample s48 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/48.png"); sampleSet[7] = s48;s48.expectedOutput = 4;
-        sample s49 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/49.png"); sampleSet[8] = s49;s49.expectedOutput = 4;
-        sample s410 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/410.png"); sampleSet[9] = s410;s410.expectedOutput = 4;
-        sample s411 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/411.png"); sampleSet[10] = s411;s411.expectedOutput = 4;
-        sample s412 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/412.png"); sampleSet[11] = s412;s412.expectedOutput = 4;
-        sample s413 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/413.png"); sampleSet[12] = s413;s413.expectedOutput = 4;
-        sample s414 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/414.png"); sampleSet[13] = s414;s414.expectedOutput = 4;
-        sample s415 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/415.png"); sampleSet[14] = s415;s415.expectedOutput = 4;
-        sample s416 = new sample(width, height, "/Users/shuuihisashi/Desktop/samples/416.png"); sampleSet[15] = s416;s416.expectedOutput = 4;
+        sample s41 = new sample(width, height, "/samples/41.png"); sampleSet[0] = s41;s41.expectedOutput = 4;
+        sample s42 = new sample(width, height, "/samples/42.png"); sampleSet[1] = s42;s42.expectedOutput = 4;
+        sample s43 = new sample(width, height, "/samples/43.png"); sampleSet[2] = s43;s43.expectedOutput = 4;
+        sample s44 = new sample(width, height, "/samples/44.png"); sampleSet[3] = s44;s44.expectedOutput = 4;
+        sample s45 = new sample(width, height, "/samples/45.png"); sampleSet[4] = s45;s45.expectedOutput = 4;
+        sample s46 = new sample(width, height, "/samples/46.png"); sampleSet[5] = s46;s46.expectedOutput = 4;
+        sample s47 = new sample(width, height, "/samples/47.png"); sampleSet[6] = s47;s47.expectedOutput = 4;
+        sample s48 = new sample(width, height, "/samples/48.png"); sampleSet[7] = s48;s48.expectedOutput = 4;
+        sample s49 = new sample(width, height, "/samples/49.png"); sampleSet[8] = s49;s49.expectedOutput = 4;
+        sample s410 = new sample(width, height, "/samples/410.png"); sampleSet[9] = s410;s410.expectedOutput = 4;
+        sample s411 = new sample(width, height, "/samples/411.png"); sampleSet[10] = s411;s411.expectedOutput = 4;
+        sample s412 = new sample(width, height, "/samples/412.png"); sampleSet[11] = s412;s412.expectedOutput = 4;
+        sample s413 = new sample(width, height, "/samples/413.png"); sampleSet[12] = s413;s413.expectedOutput = 4;
+        sample s414 = new sample(width, height, "/samples/414.png"); sampleSet[13] = s414;s414.expectedOutput = 4;
+        sample s415 = new sample(width, height, "/samples/415.png"); sampleSet[14] = s415;s415.expectedOutput = 4;
+        sample s416 = new sample(width, height, "/samples/416.png"); sampleSet[15] = s416;s416.expectedOutput = 4;
     }
     void forward(sample input){
         //bring the inputs into the input layer layers[0]
